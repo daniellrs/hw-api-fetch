@@ -1,0 +1,8 @@
+{
+  "short_name": "hw-api-fetch",
+  "name": "hw-api-fetch",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
