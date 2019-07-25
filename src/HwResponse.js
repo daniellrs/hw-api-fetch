@@ -182,7 +182,8 @@ export default class HwResponse {
       return this.response.conteudo;
   };
 
-
+  // Retorna o conteudo cru do request
+  getRaw = () => this.response || {}
 
   // -------------------------------------------------------------------------------------------------------
   // -------------------- Funções privadas, evitar utilizar ------------------------------------------------
