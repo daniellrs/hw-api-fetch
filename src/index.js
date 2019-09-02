@@ -1,12 +1,14 @@
 import * as utils from './utils'
 import HwResponse from './HwResponse'
+import PubSub from 'pubsub-js';
 
 export default class HWApiFetch {
   constructor(properties={}) {
-    HWApiFetch.properties = properties
+    HWApiFetch.pending = {};
+    HWApiFetch.properties = properties;
   }
 
-  static get( path, data={} ) {
+  static get( path, data={}, requestId ) {
     const dataKeys = Object.keys(data)
     let params = ''
     dataKeys.forEach((key, index) => {
@@ -14,23 +16,23 @@ export default class HWApiFetch {
       params += `${key}=${data[key]}`
       if(index !== dataKeys.length-1) params += '&'
     })
-    return this.send(`${path}${params}`, 'GET')
+    return this.send(`${path}${params}`, 'GET', undefined ,requestId)
   }
 
   static post( path, data ) {
-    return this.send(path, 'POST', data)
+    return this.send(path, 'POST', data, requestId)
   }
 
   static put( path, data ) {
-    return this.send(path, 'PUT', data)
+    return this.send(path, 'PUT', data, requestId)
   }
 
   static patch( path, data ) {
-    return this.send(path, 'PATCH', data)
+    return this.send(path, 'PATCH', data, requestId)
   }
 
   static delete( path, data ) {
-    return this.send(path, 'DELETE', data)
+    return this.send(path, 'DELETE', data, requestId)
   }
 
   static getHeaders() {
@@ -53,11 +55,20 @@ export default class HWApiFetch {
     return header;
   }
 
-  static send(path, method, data) {
+  static send(path, method, data, requestId) {
+    if(requestId) {
+      if(HWApiFetch.pending[requestId]) return;
+      HWApiFetch.pending[requestId] = true;
+    }
+    if(requestId) PubSub.publish("HW-API-REQUEST-START", {requestId});
     return fetch(`${HWApiFetch.properties.host}${path}`, {
       method: method,
       body: JSON.stringify( data ),
       headers: {...this.getHeaders(), ...this.contentType(method)},
+    }).then(res => {
+      if(requestId) PubSub.publish("HW-API-REQUEST-END", {requestId});
+      delete HWApiFetch.pending[requestId];
+      return res;
     }).then( res => res.json() ).then( res => {
       if(HWApiFetch.properties.log) console.log( method + ' > ', path, data, res )
       if(HWApiFetch.properties.beforeReturn) {
@@ -68,5 +79,6 @@ export default class HWApiFetch {
       if(HWApiFetch.properties.hwResponse) res = new HwResponse(res)
       return res;
     })
+    
   }
 }
