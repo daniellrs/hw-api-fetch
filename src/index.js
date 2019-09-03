@@ -57,7 +57,7 @@ export default class HWApiFetch {
 
   static send(path, method, data, requestId) {
     if(requestId) {
-      if(HWApiFetch.pending[requestId]) return Promise.resolve();
+      if(HWApiFetch.pending[requestId]) return new Promise((res, rej) => rej());
       HWApiFetch.pending[requestId] = true;
     }
     if(requestId) PubSub.publish("HW-API-REQUEST-START", {requestId});
