@@ -19,19 +19,19 @@ export default class HWApiFetch {
     return this.send(`${path}${params}`, 'GET', undefined ,requestId)
   }
 
-  static post( path, data ) {
+  static post( path, data, requestId ) {
     return this.send(path, 'POST', data, requestId)
   }
 
-  static put( path, data ) {
+  static put( path, data, requestId ) {
     return this.send(path, 'PUT', data, requestId)
   }
 
-  static patch( path, data ) {
+  static patch( path, data, requestId ) {
     return this.send(path, 'PATCH', data, requestId)
   }
 
-  static delete( path, data ) {
+  static delete( path, data, requestId ) {
     return this.send(path, 'DELETE', data, requestId)
   }
 
