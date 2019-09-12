@@ -8,6 +8,11 @@ export default class HWApiFetch {
     HWApiFetch.properties = properties;
   }
 
+  static init(properties={}) {
+    HWApiFetch.pending = {};
+    HWApiFetch.properties = properties;
+  }
+
   static get( path, data={}, requestId ) {
     const dataKeys = Object.keys(data)
     let params = ''
