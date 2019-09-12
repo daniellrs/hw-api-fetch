@@ -33,7 +33,7 @@ const properties = {
   hwResponse: true
 }
 
-new HWApiFetch(properties)
+HWApiFetch.init(properties)
 
 ```
 
@@ -46,7 +46,7 @@ The properties are:
 | beforeReturn | array | Array of functions to be applied before the data returns. |
 | log | boolean | Log api calls to the console. Default false. |
 | hwResponse | boolean | Data comes with hwResponse format. Default false. |
-
+| noContentType | boolean | Remove default content-type sended in the header. Default false. |
 
 Then you can make the calls to your api:
 

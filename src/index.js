@@ -54,6 +54,8 @@ export default class HWApiFetch {
   }
 
   static contentType(method) {
+    if(HWApiFetch.properties.noContentType) return {}
+    
     const header = {}
     if( method === 'PATCH' ) header['Content-Type'] = 'application/json-patch+json;charset=UTF-8'
     else header['Content-Type'] = 'application/json;charset=UTF-8'
