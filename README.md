@@ -47,6 +47,7 @@ The properties are:
 | log | boolean | Log api calls to the console. Default false. |
 | hwResponse | boolean | Data comes with hwResponse format. Default false. |
 | noContentType | boolean | Remove default content-type sended in the header. Default false. |
+| fetchProperties | object | Add properties to fetch options. | 
 
 Then you can make the calls to your api:
 

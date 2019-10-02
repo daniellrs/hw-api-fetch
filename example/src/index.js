@@ -18,7 +18,7 @@ new HWApiFetch({
     res => {return {...res, test: true}}
   ],
   log: true,
-  hwResponse: true
+  hwResponse: true,
 })
 
 ReactDOM.render(<App />, document.getElementById('root'))

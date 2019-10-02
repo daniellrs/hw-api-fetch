@@ -3,12 +3,12 @@ import HwResponse from './HwResponse'
 import PubSub from 'pubsub-js';
 
 export default class HWApiFetch {
-  constructor(properties={}) {
+  constructor(properties={fetchProperties: {}}) {
     HWApiFetch.pending = {};
     HWApiFetch.properties = properties;
   }
 
-  static init(properties={}) {
+  static init(properties={fetchProperties: {}}) {
     HWApiFetch.pending = {};
     HWApiFetch.properties = properties;
   }
@@ -72,6 +72,7 @@ export default class HWApiFetch {
       method: method,
       body: JSON.stringify( data ),
       headers: {...this.getHeaders(), ...this.contentType(method)},
+      ...HWApiFetch.properties.fetchProperties
     }).then(res => {
       if(requestId) PubSub.publish("HW-API-REQUEST-END", {requestId});
       delete HWApiFetch.pending[requestId];
