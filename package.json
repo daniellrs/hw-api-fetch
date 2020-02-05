@@ -1,6 +1,6 @@
 {
   "name": "hw-api-fetch",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "",
   "author": "daniellrs",
   "license": "MIT",
@@ -59,6 +59,7 @@
     "dist"
   ],
   "dependencies": {
+    "isomorphic-unfetch": "^3.0.0",
     "pubsub-js": "^1.7.0"
   }
 }
